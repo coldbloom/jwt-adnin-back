@@ -14,6 +14,7 @@ authRouter.post("/login", (req, res) => {
         .update(password)
         .digest("hex");
     const isVerifiedPassword = hash === fakeUser.passwordHash;
+    console.log(isVerifiedPassword, ' = isVerifiedPassword')
 
     if (login !== fakeUser.login || !isVerifiedPassword) {
         return res.status(401).send("Login fail");

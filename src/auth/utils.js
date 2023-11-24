@@ -7,8 +7,8 @@ const accessTokenAge = 20; //s
 const refreshTokenAge = 60 * 60; //s (1h)
 
 const getTokens = (login) => ({
-    accessToken: jwt.sign({ login }, signatureAccess, {expressIn: `${accessTokenAge}s`}),
-    refreshToken: jwt.sign({ login }, signatureRefresh, {expressIn: `${refreshTokenAge}s`})
+    accessToken: jwt.sign({ login }, signatureAccess, {expiresIn: `${accessTokenAge}s`}),
+    refreshToken: jwt.sign({ login }, signatureRefresh, {expiresIn: `${refreshTokenAge}s`})
 });
 
 module.exports = {
