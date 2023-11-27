@@ -25,12 +25,23 @@ authRouter.post("/login", (req, res) => {
     res.setHeader(
         "Set-cookie",
         cookie.serialize('refreshToken', refreshToken, {
-            httpOnly: 'true',
+            httpOnly: true,
             maxAge: refreshTokenAge
         })
     )
     res.send({accessToken: accessToken})
 })
+
+authRouter.get("/logout", (req, res) => {
+    res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("refreshToken", "", {
+            httpOnly: true,
+            maxAge: 0,
+        })
+    );
+    res.sendStatus(200);
+});
 
 module.exports = authRouter;
 

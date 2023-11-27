@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/jwt-adnin-back.iml" filepath="$PROJECT_DIR$/.idea/jwt-adnin-back.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/jwt-back.iml" filepath="$PROJECT_DIR$/.idea/jwt-back.iml" />
     </modules>
   </component>
 </project>
