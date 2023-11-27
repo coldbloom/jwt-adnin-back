@@ -1,10 +1,11 @@
 const express = require('express');
 const {passwordSecret, fakeUser} = require("./data");
-const {getTokens, refreshTokenAge} = require('./utils')
+const {getTokens, refreshTokenAge, verifyAuthorizationMiddleware} = require('./utils')
 const cookie = require("cookie");
 const crypto = require("crypto");
 
 const authRouter = express.Router();
+
 
 authRouter.post("/login", (req, res) => {
     const { login, password } = req.body;
@@ -14,14 +15,12 @@ authRouter.post("/login", (req, res) => {
         .update(password)
         .digest("hex");
     const isVerifiedPassword = hash === fakeUser.passwordHash;
-    console.log(isVerifiedPassword, ' = isVerifiedPassword')
 
     if (login !== fakeUser.login || !isVerifiedPassword) {
         return res.status(401).send("Login fail");
     }
 
     const {accessToken, refreshToken} = getTokens(login)
-
     res.setHeader(
         "Set-cookie",
         cookie.serialize('refreshToken', refreshToken, {
@@ -33,6 +32,8 @@ authRouter.post("/login", (req, res) => {
 })
 
 authRouter.get("/logout", (req, res) => {
+    console.log(req.cookies, 'iiiiIIIIIiiii')
+    res.cookie('test', 'abcde')
     res.setHeader(
         "Set-Cookie",
         cookie.serialize("refreshToken", "", {
@@ -40,8 +41,12 @@ authRouter.get("/logout", (req, res) => {
             maxAge: 0,
         })
     );
-    res.sendStatus(200);
+    res.send('logout');
 });
+
+authRouter.get('/profile', verifyAuthorizationMiddleware ,(req, res) => {
+    res.send("admin");
+})
 
 module.exports = authRouter;
 
